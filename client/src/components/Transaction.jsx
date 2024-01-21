@@ -20,7 +20,7 @@ const TransactionCard = ({addressTo, addressFrom, timestamp,
         <div className="flex flex-col items-center w-full mt-3 ">
           <div className="w-full mb-6 p-2">
             <a
-              href={`https://sapolia.etherscan.io/address/${addressFrom}`}
+              href={`https://sepolia.etherscan.io/address/${addressFrom}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -30,7 +30,7 @@ const TransactionCard = ({addressTo, addressFrom, timestamp,
               </p>
             </a>
             <a
-              href={`https://sapolia.etherscan.io/address/${addressTo}`}
+              href={`https://sepolia.etherscan.io/address/${addressTo}`}
               target="_blank"
               rel="noopener noreferrer"
             ></a>
@@ -38,7 +38,7 @@ const TransactionCard = ({addressTo, addressFrom, timestamp,
               {" "}
               To: {shortenAddress(addressTo)}
             </p>
-            <p className="text-white text-base"> Amount: {amount}</p>
+            <p className="text-white text-base"> Amount: {amount} ETH</p>
             {message && (
               <>
                 <br />
@@ -63,7 +63,9 @@ const TransactionCard = ({addressTo, addressFrom, timestamp,
   
 
 const Transaction = () => {
-  const {currentAccount }= useContext(TransactionContext)
+  // const {currentAccount }= useContext(TransactionContext)
+
+   const { transactions, currentAccount } = useContext(TransactionContext);
 
   return (
     <div
@@ -80,14 +82,12 @@ const Transaction = () => {
             Connect to your account to see the latest transaction
           </h3>
         )}
-      <div className='flex flex-wrap justify-center items-center mt-10'>
-      {dummyData.reverse().map((transact, i) => (
-        <TransactionCard key={i} 
-          {...transact}
-        />
-      ))}
-
-      </div>
+        <div className="flex flex-wrap justify-center items-center mt-10">
+          {/* {dummyData.reverse().map((transact, index) => ( */}
+          {[...dummyData, ...transactions].reverse().map((transact, index) => (
+            <TransactionCard key={index} {...transact} />
+          ))}
+        </div>
       </div>
     </div>
   );
